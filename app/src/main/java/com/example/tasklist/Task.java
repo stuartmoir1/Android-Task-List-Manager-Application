@@ -1,22 +1,25 @@
 package com.example.tasklist;
 
+import java.io.Serializable;
+
 /**
  * Created by stuartmoir on 11/08/2017.
  */
 
-public class Task {
+public class Task implements Serializable{
 
     // Properties
-    private int id;
+    private Integer id;
     private String category;
-    private int priority;
+    private Integer priority;
     private String description;
-    private String dueDate;
-    private boolean status;
+    private String dueDate; // TO DO - Date to be changed from type String to type Date.
+    private Boolean status;
     private String notes;
 
     // Constructor
-    public Task(int id, String category, int priority, String description, String
+    // TO DO - Date to be changed from type String to type Date.
+    public Task(Integer id, String category, Integer priority, String description, String
             dueDate, boolean status, String notes){
         this.id = id;
         this.category = category;
@@ -31,11 +34,11 @@ public class Task {
 
     // Id
 
-    public int getId(){
+    public Integer getId(){
         return this.id;
     }
 
-    public void setId(int id){
+    public void setId(Integer id){
         this.id = id;
     }
 
@@ -51,15 +54,15 @@ public class Task {
 
     // Priority
 
-    public int getPriority(){
+    public Integer getPriority(){
         return this.priority;
     }
 
-    public void setPriority(int priority){
+    public void setPriority(Integer priority){
         this.priority = priority;
     }
 
-    //
+    // Description
 
     public String getDescription(){
         return this.description;
@@ -69,6 +72,7 @@ public class Task {
         this.description = description;
     }
 
+    // TO DO - Date to be changed from type String to type Date.
     // Due date.
 
     public String getDueDate(){
@@ -81,7 +85,7 @@ public class Task {
 
     // Status
 
-    public boolean getStatus(){
+    public Boolean getStatus(){
         return this.status;
     }
 

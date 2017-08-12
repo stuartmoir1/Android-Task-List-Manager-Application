@@ -13,7 +13,7 @@ public class TaskList {
 
     // Constructor
     public TaskList() {
-        // Data to facilitate development - to be removed.
+        // TO BE REMOVED - Data to facilitate development.
         list = new ArrayList<Task>();
         list.add(new Task(1, "work", 1, "Task 1", "Date 1", false, "Notes 1"));
         list.add(new Task(2, "work", 2, "Task 2", "Date 2", false, "Notes 2"));

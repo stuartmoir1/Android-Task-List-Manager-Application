@@ -4,6 +4,8 @@ import org.junit.Before;
 import org.junit.Test;
 
 import static junit.framework.Assert.assertEquals;
+import static junit.framework.Assert.assertFalse;
+import static junit.framework.Assert.assertTrue;
 
 /**
  * Created by stuartmoir on 11/08/2017.
@@ -25,13 +27,15 @@ public class TaskTest {
 
     @Test
     public void testGetId(){
-        assertEquals(1, task.getId());
+        Integer id = 1;
+        assertEquals(id, task.getId());
     }
 
     @Test
     public void testSetId(){
-        task.setId(2);
-        assertEquals(2, task.getId());
+        Integer id = 2;
+        task.setId(id);
+        assertEquals(id, task.getId());
     }
 
     // Category
@@ -50,14 +54,16 @@ public class TaskTest {
     // Priority
 
     @Test
-    public void testGetCPriority(){
-        assertEquals(1, task.getPriority());
+    public void testGetPriority(){
+        Integer priority = 1;
+        assertEquals(priority, task.getPriority());
     }
 
     @Test
     public void testSetPriority(){
-        task.setPriority(2);
-        assertEquals(2, task.getPriority());
+        Integer priority = 2;
+        task.setPriority(priority);
+        assertEquals(priority, task.getPriority());
     }
 
     // Description
@@ -90,13 +96,13 @@ public class TaskTest {
 
     @Test
     public void testGetStatus(){
-        assertEquals(false, task.getStatus());
+        assertFalse(task.getStatus());
     }
 
     @Test
     public void testSetStatus(){
         task.setStatus(true);
-        assertEquals(true, task.getStatus());
+        assertTrue(task.getStatus());
     }
 
     // Notes

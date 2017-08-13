@@ -98,9 +98,7 @@ public class TaskActivity3 extends AppCompatActivity {
 
         // Return to task list view.
         Intent intent = new Intent(this, TaskListActivity.class);
-        intent.putExtra("tasklist", this.taskList);
         startActivity(intent);
-        Log.d("Post button press", taskList.toString());
     }
 
     public void saveTask(){

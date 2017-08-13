@@ -1,11 +1,16 @@
 package com.example.tasklist;
 
+import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
 import android.widget.ListView;
+
+import com.google.gson.Gson;
+import com.google.gson.reflect.TypeToken;
 
 import java.util.ArrayList;
 
@@ -21,9 +26,17 @@ public class TaskListActivity extends AppCompatActivity {
         //TaskList taskList = new TaskList();
         //ArrayList<Task> list = taskList.getList();
 
-        //
-        Intent intent = getIntent();
-        ArrayList<Task> list = (ArrayList<Task>) getIntent().getSerializableExtra("tasklist");
+        // Get 'string of objects' from SP.
+        SharedPreferences sharedPref =
+                getSharedPreferences(getString(R.string.preference_file_key),
+             Context.MODE_PRIVATE);
+        String tasksSP = sharedPref.getString("TaskList",
+                new ArrayList<Task>().toString());
+
+        // Convert 'string of objects' to array of objects.
+        Gson gson = new Gson();
+        TypeToken<ArrayList<Task>> tasksGS = new TypeToken<ArrayList<Task>>(){};
+        ArrayList<Task> list = gson.fromJson(tasksSP, tasksGS.getType());
 
         // Create Adapter.
         TaskListAdapter taskListAdapter = new TaskListAdapter(this, list);

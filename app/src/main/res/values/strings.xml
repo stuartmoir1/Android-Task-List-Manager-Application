@@ -1,3 +1,4 @@
 <resources>
     <string name="app_name">TaskList</string>
+    <string name="preference_file_key">TASKDETAILS</string>
 </resources>

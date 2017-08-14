@@ -71,15 +71,17 @@ public class TaskActivity3 extends AppCompatActivity {
         // Get data from calling activity.
         Intent intent = getIntent();
         this.task = (Task) getIntent().getSerializableExtra("task");
-        Log.d("task: ", this.task.toString());
+        //Log.d("task: ", this.task.toString());
 
         // Set form fields.
-        this.descriptionForm.setText(task.getDescription());
-        this.priorityForm.setText(task.getPriority().toString());
-        this.categoryForm.setText(task.getCategory());
-        this.statusForm.setText(String.valueOf(task.getStatus()));
-        this.dueDateForm.setText(task.getDueDate());
-        this.notesForm.setText(task.getNotes());
+        if (this.task != null) {
+            this.descriptionForm.setText(task.getDescription());
+            this.priorityForm.setText(task.getPriority().toString());
+            this.categoryForm.setText(task.getCategory());
+            this.statusForm.setText(String.valueOf(task.getStatus()));
+            this.dueDateForm.setText(task.getDueDate());
+            this.notesForm.setText(task.getNotes());
+        }
     }
 
     public void onButtonClicked(View button) {
@@ -124,9 +126,14 @@ public class TaskActivity3 extends AppCompatActivity {
         String notes = notesForm.getText().toString();
 
         // Replace object in array.
-        Integer id = this.task.getId();
-        Task newTask = new Task(id, category, priority, description, dueDate,
-                status, notes);
+        if (this.task != null) {
+            Integer id = this.task.getId();
+            Task newTask = new Task(id, category, priority, description, dueDate,
+                    status, notes);
+        } else {
+            // Get next id
+        }
+
 
         Log.d("taskList pre-remove: ", this.taskList.toString());
         for ( Task t : this.taskList ) {
@@ -145,7 +152,7 @@ public class TaskActivity3 extends AppCompatActivity {
         SharedPreferences.Editor editor = sharedPref.edit();
         editor.putString("TaskList", gson.toJson(this.taskList));
         editor.apply();
-        Toast.makeText(this, "Task Saved", Toast.LENGTH_LONG).show();
+        //Toast.makeText(this, "Task Saved", Toast.LENGTH_LONG).show();
     }
 
     public void deleteTask(){

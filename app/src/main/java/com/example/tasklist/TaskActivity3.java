@@ -45,7 +45,7 @@ public class TaskActivity3 extends AppCompatActivity {
         this.buttonDelete = (Button) findViewById(R.id.button_delete);
         this.buttonCancel = (Button) findViewById(R.id.button_cancel);
 
-        // Get 'string of objects' from SP.
+        // Get String data from SP.
         this.sharedPref =
             getSharedPreferences(getString(R.string.preference_file_key),
                 Context.MODE_PRIVATE);
@@ -53,7 +53,7 @@ public class TaskActivity3 extends AppCompatActivity {
             new ArrayList<Task>().toString());
         Log.d("tasksSP: ", tasksSP);
 
-        // Convert 'string of objects' to array of objects.
+        // Convert SP String data to ArrayList.
         Gson gson = new Gson();
         TypeToken<ArrayList<Task>> tasksGS = new TypeToken<ArrayList<Task>>(){};
         Log.d("tasksGS: ", tasksGS.toString());
@@ -71,7 +71,6 @@ public class TaskActivity3 extends AppCompatActivity {
         // Get data from calling activity.
         Intent intent = getIntent();
         this.task = (Task) getIntent().getSerializableExtra("task");
-        //Log.d("task: ", this.task.toString());
 
         // Set form fields.
         if (this.task != null) {
@@ -87,10 +86,8 @@ public class TaskActivity3 extends AppCompatActivity {
     public void onButtonClicked(View button) {
 
         if ( button == this.buttonSave ) {
-            // Save
             saveTask();
         } else if ( button == this.buttonDelete ) {
-            // Delete
             deleteTask();
         } else if ( button == this.buttonCancel ) {
             // Do nothing.
@@ -126,26 +123,51 @@ public class TaskActivity3 extends AppCompatActivity {
         String notes = notesForm.getText().toString();
 
         // Replace object in array.
+        //Integer id = this.task.getId();
+        //Task newTask = new Task(id, category, priority, description, dueDate,
+        //        status, notes);
+
+        //Log.d("taskList pre-remove: ", this.taskList.toString());
+        //for ( Task t : this.taskList ) {
+        //    if ( t.getId().equals(id) ) {
+        //        this.taskList.remove(t);
+        //       break;
+        //    }
+        //}
+        //Log.d("taskList post-remove: ", this.taskList.toString());
+
+        //this.taskList.add(newTask);
+        //Log.d("taskList: post-add", this.taskList.toString());
+
+        Log.d("taskList pre-save: ", taskList.toString());
+
+        Integer id;
         if (this.task != null) {
-            Integer id = this.task.getId();
-            Task newTask = new Task(id, category, priority, description, dueDate,
-                    status, notes);
-        } else {
-            // Get next id
-        }
-
-
-        Log.d("taskList pre-remove: ", this.taskList.toString());
-        for ( Task t : this.taskList ) {
-            if ( t.getId().equals(id) ) {
-                this.taskList.remove(t);
-                break;
+            // Remove existing task from SP.
+            id = this.task.getId();
+            for ( Task t : this.taskList ) {
+                if ( t.getId().equals(id) ) {
+                    this.taskList.remove(t);
+                    break;
+                }
             }
+            Log.d("tasktoberemoved id: ", id.toString());
+        } else {
+            // Create new task.
+            int lastId = 0;
+            for (Task task : taskList) {
+                //id = task.getId() ? task.getId() > id;
+                if (task.getId() > lastId) {
+                    lastId = task.getId();
+                }
+            }
+            id = lastId + 1;
+            Log.d("tasktobeadded id: ", id.toString());
         }
-        Log.d("taskList post-remove: ", this.taskList.toString());
-
+        Task newTask = new Task(id, category, priority, description, dueDate, status, notes);
         this.taskList.add(newTask);
-        Log.d("taskList: post-add", this.taskList.toString());
+
+        Log.d("taskList pre-save: ", taskList.toString());
 
         // Save task list to SP.
         Gson gson = new Gson();
@@ -156,10 +178,6 @@ public class TaskActivity3 extends AppCompatActivity {
     }
 
     public void deleteTask(){
-
-        Log.d("method: ", "deleteTask");
-
-        //this.taskList.clear();
 
         Integer id = this.task.getId();
 
@@ -177,6 +195,6 @@ public class TaskActivity3 extends AppCompatActivity {
         SharedPreferences.Editor editor = sharedPref.edit();
         editor.putString("TaskList", gson.toJson(this.taskList));
         editor.apply();
-        Toast.makeText(this, "Task Deleted", Toast.LENGTH_LONG).show();
+        //Toast.makeText(this, "Task Deleted", Toast.LENGTH_LONG).show();
     }
 }

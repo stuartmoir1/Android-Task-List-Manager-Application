@@ -24,34 +24,30 @@ public class TaskListActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.task_list);
 
-        // TO BE REMOVED - Data to faciliate development.
-        // Get ArrayList from model java.
+        // Seed data.
         //TaskList taskList = new TaskList();
         //ArrayList<Task> list = taskList.getList();
 
-        // Get 'string of objects' from SP.
+        // Get String data from SP.
         SharedPreferences sharedPref =
         getSharedPreferences(getString(R.string.preference_file_key),
              Context.MODE_PRIVATE);
         String tasksSP = sharedPref.getString("TaskList",
                 new ArrayList<Task>().toString());
 
-        // Convert 'string of objects' to array of objects.
+        // Convert SP String data to ArrayList.
         Gson gson = new Gson();
         TypeToken<ArrayList<Task>> tasksGS = new TypeToken<ArrayList<Task>>(){};
         ArrayList<Task> list = gson.fromJson(tasksSP, tasksGS.getType());
 
-        // Create Adapter.
+        // Create Adapter and set ListView
         TaskListAdapter taskListAdapter = new TaskListAdapter(this, list);
-
-        // Set ListView.
         ListView listView = (ListView) findViewById(R.id.list);
         listView.setAdapter(taskListAdapter);
     }
 
     public void getTask(View listItem){
         Task task = (Task) listItem.getTag();
-
         Intent intent = new Intent(this, TaskActivity3.class);
         intent.putExtra("task", task);
         startActivity(intent);

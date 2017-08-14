@@ -79,6 +79,21 @@ public class TestArrayListSort {
     }
 
     @Test
+    public void testSortById(){
+        // Expected
+        Task[] tasks = new Task[]{task5, task3, task2, task4, task1};
+        // Sort
+        ArrayListSort sort = new ArrayListSort();
+        ArrayList<Task> sortedArr = sort.byId(taskList);
+        // Test
+        int i = 0;
+        for (Task task : sortedArr) {
+            assertEquals(tasks[i].toString(), task.toString());
+            i++;
+        }
+    }
+
+    @Test
     public void testSortByPriorityThenId(){
         // Expected
         Task[] tasks = new Task[]{task3, task1, task5, task2, task4};

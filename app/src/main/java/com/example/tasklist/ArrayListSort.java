@@ -32,6 +32,11 @@ public class ArrayListSort {
         return taskList;
     }
 
+    public ArrayList<Task> byId(ArrayList<Task> taskList){
+        Collections.sort(taskList, Task.TaskIdComparator);
+        return taskList;
+    }
+
     public ArrayList<Task> byPriorityThenId(ArrayList<Task> taskList){
         Collections.sort(taskList, Task.TaskPriorityThenIdComparator);
         return taskList;

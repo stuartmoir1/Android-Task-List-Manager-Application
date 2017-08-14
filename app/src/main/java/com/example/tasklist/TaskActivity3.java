@@ -69,7 +69,7 @@ public class TaskActivity3 extends AppCompatActivity {
         this.notesForm = (EditText) findViewById(R.id.notes);
 
         // Get data from calling activity.
-        Intent intent = getIntent();
+        //Intent intent = getIntent();
         this.task = (Task) getIntent().getSerializableExtra("task");
 
         // Set form fields.
@@ -121,23 +121,6 @@ public class TaskActivity3 extends AppCompatActivity {
         Boolean status = Boolean.valueOf(statusStr);
         String dueDate = dueDateForm.getText().toString();
         String notes = notesForm.getText().toString();
-
-        // Replace object in array.
-        //Integer id = this.task.getId();
-        //Task newTask = new Task(id, category, priority, description, dueDate,
-        //        status, notes);
-
-        //Log.d("taskList pre-remove: ", this.taskList.toString());
-        //for ( Task t : this.taskList ) {
-        //    if ( t.getId().equals(id) ) {
-        //        this.taskList.remove(t);
-        //       break;
-        //    }
-        //}
-        //Log.d("taskList post-remove: ", this.taskList.toString());
-
-        //this.taskList.add(newTask);
-        //Log.d("taskList: post-add", this.taskList.toString());
 
         Log.d("taskList pre-save: ", taskList.toString());
 

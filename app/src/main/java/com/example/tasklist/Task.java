@@ -134,6 +134,16 @@ public class Task implements Serializable{
         }
     };
 
+    // Comparator for sorting ArrayList by id.
+    public static Comparator<Task> TaskIdComparator = new Comparator<Task>() {
+        public int compare (Task task1, Task task2) {
+            Integer taskId1 = task1.getId();
+            Integer taskId2 = task2.getId();
+            // Ascending order.
+            return taskId1.compareTo(taskId2);
+        }
+    };
+
     // Comparator for sorting ArrayList by priority then id.
     public static Comparator<Task> TaskPriorityThenIdComparator = new Comparator<Task>() {
         public int compare (Task task1, Task task2) {

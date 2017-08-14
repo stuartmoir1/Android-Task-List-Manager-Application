@@ -19,6 +19,9 @@ import java.util.ArrayList;
 
 public class TaskListActivity extends AppCompatActivity {
 
+    // Properties
+    private ArrayList<Task> list;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -38,10 +41,23 @@ public class TaskListActivity extends AppCompatActivity {
         // Convert SP String data to ArrayList.
         Gson gson = new Gson();
         TypeToken<ArrayList<Task>> tasksGS = new TypeToken<ArrayList<Task>>(){};
-        ArrayList<Task> list = gson.fromJson(tasksSP, tasksGS.getType());
+        list = gson.fromJson(tasksSP, tasksGS.getType());
+
+        //
+
+        ArrayList<Task> sortedArr;
+        //Intent intent = getIntent();
+        sortedArr = (ArrayList<Task>) getIntent().getSerializableExtra("sortedArr");
+
+        if (sortedArr == null) {
+            ArrayListSort sort = new ArrayListSort();
+            sortedArr = sort.byId(list);
+        }
+
+        //
 
         // Create Adapter and set ListView
-        TaskListAdapter taskListAdapter = new TaskListAdapter(this, list);
+        TaskListAdapter taskListAdapter = new TaskListAdapter(this, sortedArr);
         ListView listView = (ListView) findViewById(R.id.list);
         listView.setAdapter(taskListAdapter);
     }
@@ -62,29 +78,66 @@ public class TaskListActivity extends AppCompatActivity {
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
+
+
         if (item.getItemId() == R.id.add_task) {
             Intent intent = new Intent(this, TaskActivity3.class);
             startActivity(intent);
             return true;
         }
         if (item.getItemId() == R.id.sort_by_priority) {
-            // TODO: do something
+
+            ArrayListSort sort = new ArrayListSort();
+            ArrayList<Task> sortedArr = sort.byPriorityThenId(list);
+
+            Intent intent = new Intent(this, TaskListActivity.class);
+            intent.putExtra("sortedArr", sortedArr);
+            startActivity(intent);
+
             return true;
         }
         if (item.getItemId() == R.id.sort_by_category) {
-            // TODO: do something
+
+            ArrayListSort sort = new ArrayListSort();
+            ArrayList<Task> sortedArr = sort.byCategoryThenId(list);
+
+            Intent intent = new Intent(this, TaskListActivity.class);
+            intent.putExtra("sortedArr", sortedArr);
+            startActivity(intent);
+
             return true;
         }
         if (item.getItemId() == R.id.sort_by_due_date) {
-            // TODO: do something
+
+            ArrayListSort sort = new ArrayListSort();
+            ArrayList<Task> sortedArr = sort.byDueDateThenId(list);
+
+            Intent intent = new Intent(this, TaskListActivity.class);
+            intent.putExtra("sortedArr", sortedArr);
+            startActivity(intent);
+
             return true;
         }
         if (item.getItemId() == R.id.show_open) {
-            // TODO: do something
+
+            ArrayListSort sort = new ArrayListSort();
+            ArrayList<Task> sortedArr = sort.showStatusOpenOnly(list);
+
+            Intent intent = new Intent(this, TaskListActivity.class);
+            intent.putExtra("sortedArr", sortedArr);
+            startActivity(intent);
+
             return true;
         }
         if (item.getItemId() == R.id.show_closed) {
-            // TODO: do something
+
+            ArrayListSort sort = new ArrayListSort();
+            ArrayList<Task> sortedArr = sort.showStatusClosedOnly(list);
+
+            Intent intent = new Intent(this, TaskListActivity.class);
+            intent.putExtra("sortedArr", sortedArr);
+            startActivity(intent);
+
             return true;
         }
         return super.onOptionsItemSelected(item);

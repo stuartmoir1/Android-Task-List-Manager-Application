@@ -21,12 +21,11 @@ public class CategoryRemoveActivity extends AppCompatActivity {
     private Button buttonRemove;
     private Button buttonCancel;
 
-    private ArrayList<Task> taskList;
-    private Task task;
-
     private EditText categoryForm;
 
     private SharedPreferences sharedPref;
+
+    private CategoryList categoryList;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -38,25 +37,19 @@ public class CategoryRemoveActivity extends AppCompatActivity {
 
         // Get String data from SP.
         this.sharedPref =
-                getSharedPreferences(getString(R.string.preference_file_key),
-                        Context.MODE_PRIVATE);
-        String tasksSP = sharedPref.getString("TaskList",
-                new ArrayList<Task>().toString());
-        Log.d("tasksSP: ", tasksSP);
+                getSharedPreferences(getString(R.string.preference_file_key), Context.MODE_PRIVATE);
+        String categorySP = sharedPref.getString("CategoryList",
+                new CategoryList().toString());
+        Log.d("categorySP: ", categorySP);
 
         // Convert SP String data.
         Gson gson = new Gson();
-        TypeToken<ArrayList<Task>> tasksGS = new TypeToken<ArrayList<Task>>(){};
-        Log.d("tasksGS: ", tasksGS.toString());
-        this.taskList = gson.fromJson(tasksSP, tasksGS.getType());
-        Log.d("taskList: ", this.taskList.toString());
+        TypeToken<CategoryList> categoryGS = new TypeToken<CategoryList>(){};
+        Log.d("categoryGS: ", categoryGS.toString());
+        this.categoryList = gson.fromJson(categorySP, categoryGS.getType());
+        Log.d("categoryList: ", this.categoryList.toString());
 
         this.categoryForm = (EditText) findViewById(R.id.category);
-
-        // Get data from calling activity.
-        this.task = (Task) getIntent().getSerializableExtra("task");
-
-        this.categoryForm.setText(task.getCategory());
     }
 
     public void onButtonClicked(View button) {
@@ -76,6 +69,17 @@ public class CategoryRemoveActivity extends AppCompatActivity {
     }
 
     public void RemoveCategory(){
-        
+
+        this.categoryForm = (EditText) findViewById(R.id.category);
+
+        String category = categoryForm.getText().toString();
+
+        this.categoryList.removeCategory(category);
+
+        // Save task list to SP.
+        Gson gson = new Gson();
+        SharedPreferences.Editor editor = sharedPref.edit();
+        editor.putString("CategoryList", gson.toJson(this.categoryList));
+        editor.apply();
     }
 }

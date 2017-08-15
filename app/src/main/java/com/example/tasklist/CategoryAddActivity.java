@@ -14,6 +14,7 @@ import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 
 public class CategoryAddActivity extends AppCompatActivity {
 
@@ -21,13 +22,12 @@ public class CategoryAddActivity extends AppCompatActivity {
     private Button buttonAdd;
     private Button buttonCancel;
 
-    private ArrayList<Task> taskList;
-    private Task task;
-
     private EditText categoryForm;
-    //private EditText categoryColourForm;
+    private EditText categoryColourForm;
 
     private SharedPreferences sharedPref;
+
+    private CategoryList categoryList;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -39,27 +39,20 @@ public class CategoryAddActivity extends AppCompatActivity {
 
         // Get String data from SP.
         this.sharedPref =
-                getSharedPreferences(getString(R.string.preference_file_key),
-                        Context.MODE_PRIVATE);
-        String tasksSP = sharedPref.getString("TaskList",
-                new ArrayList<Task>().toString());
-        Log.d("tasksSP: ", tasksSP);
+                getSharedPreferences(getString(R.string.preference_file_key), Context.MODE_PRIVATE);
+        String categorySP = sharedPref.getString("CategoryList",
+                new CategoryList().toString());
+        Log.d("categorySP: ", categorySP);
 
         // Convert SP String data.
         Gson gson = new Gson();
-        TypeToken<ArrayList<Task>> tasksGS = new TypeToken<ArrayList<Task>>(){};
-        Log.d("tasksGS: ", tasksGS.toString());
-        this.taskList = gson.fromJson(tasksSP, tasksGS.getType());
-        Log.d("taskList: ", this.taskList.toString());
+        TypeToken<CategoryList> categoryGS = new TypeToken<CategoryList>(){};
+        Log.d("categoryGS: ", categoryGS.toString());
+        this.categoryList = gson.fromJson(categorySP, categoryGS.getType());
+        Log.d("categoryList: ", this.categoryList.toString());
 
         this.categoryForm = (EditText) findViewById(R.id.category);
-        //this.categoryColourForm = (EditText) findViewById(R.id.category_colour);
-
-        // Get data from calling activity.
-        this.task = (Task) getIntent().getSerializableExtra("task");
-
-        this.categoryForm.setText(task.getCategory());
-        //this.categoryColourForm.setText(task.getCategory());
+        this.categoryColourForm = (EditText) findViewById(R.id.category_colour);
     }
 
     // TO DO. Should this method (and similar methods elsewhere) by private?
@@ -81,5 +74,18 @@ public class CategoryAddActivity extends AppCompatActivity {
 
     public void AddCategory(){
 
+        this.categoryForm = (EditText) findViewById(R.id.category);
+        this.categoryColourForm = (EditText) findViewById(R.id.category_colour);
+
+        String category = categoryForm.getText().toString();
+        String categoryColour = categoryColourForm.getText().toString();
+
+        this.categoryList.addCategory(category, categoryColour);
+
+        // Save task list to SP.
+        Gson gson = new Gson();
+        SharedPreferences.Editor editor = sharedPref.edit();
+        editor.putString("CategoryList", gson.toJson(this.categoryList));
+        editor.apply();
     }
 }

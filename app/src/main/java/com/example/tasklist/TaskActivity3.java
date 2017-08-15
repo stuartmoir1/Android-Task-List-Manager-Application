@@ -48,6 +48,7 @@ public class TaskActivity3 extends AppCompatActivity {
         this.buttonCancel = (Button) findViewById(R.id.button_cancel);
 
         // Get String data from SP.
+        // TO DO. Change "TASKDETAILS" to R.string.preference_file_key1.
         this.sharedPref =
             getSharedPreferences(getString(R.string.preference_file_key),
                 Context.MODE_PRIVATE);

@@ -16,6 +16,7 @@ import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 
 public class TaskListActivity extends AppCompatActivity {
 
@@ -33,8 +34,7 @@ public class TaskListActivity extends AppCompatActivity {
 
         // Get String data from SP.
         SharedPreferences sharedPref =
-        getSharedPreferences(getString(R.string.preference_file_key),
-            Context.MODE_PRIVATE);
+            getSharedPreferences(getString(R.string.preference_file_key), Context.MODE_PRIVATE);
         String tasksSP = sharedPref.getString("TaskList",
             new ArrayList<Task>().toString());
 
@@ -43,12 +43,25 @@ public class TaskListActivity extends AppCompatActivity {
         TypeToken<ArrayList<Task>> tasksGS = new TypeToken<ArrayList<Task>>(){};
         list = gson.fromJson(tasksSP, tasksGS.getType());
 
-        // Filter/ sort by menu selection or by id be default.
+        // Filter/ sort by menu selection or by id by default.
         ArrayList<Task> sortedArr;
         sortedArr = (ArrayList<Task>) getIntent().getSerializableExtra("sortedArr");
         if (sortedArr == null) {
             ArrayListSort sort = new ArrayListSort();
             sortedArr = sort.byId(list);
+        }
+
+        // Save category list to SP if it does not exist.
+        String categoriesSP = sharedPref.getString("CategoryList",
+                new HashMap<String, String>().toString());
+        Log.d("categoriesSP: ", categoriesSP.toString());
+
+        if (categoriesSP.toString() == "{}"){
+            Log.d("categories to SP", "...");
+            CategoryList categoryList = new CategoryList();
+            SharedPreferences.Editor editor = sharedPref.edit();
+            editor.putString("CategoryList", gson.toJson(categoryList));
+            editor.apply();
         }
 
         // Create Adapter and set ListView

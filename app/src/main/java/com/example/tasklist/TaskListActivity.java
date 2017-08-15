@@ -34,27 +34,22 @@ public class TaskListActivity extends AppCompatActivity {
         // Get String data from SP.
         SharedPreferences sharedPref =
         getSharedPreferences(getString(R.string.preference_file_key),
-             Context.MODE_PRIVATE);
+            Context.MODE_PRIVATE);
         String tasksSP = sharedPref.getString("TaskList",
-                new ArrayList<Task>().toString());
+            new ArrayList<Task>().toString());
 
-        // Convert SP String data to ArrayList.
+        // Convert SP String data.
         Gson gson = new Gson();
         TypeToken<ArrayList<Task>> tasksGS = new TypeToken<ArrayList<Task>>(){};
         list = gson.fromJson(tasksSP, tasksGS.getType());
 
-        //
-
+        // Filter/ sort by menu selection or by id be default.
         ArrayList<Task> sortedArr;
-        //Intent intent = getIntent();
         sortedArr = (ArrayList<Task>) getIntent().getSerializableExtra("sortedArr");
-
         if (sortedArr == null) {
             ArrayListSort sort = new ArrayListSort();
             sortedArr = sort.byId(list);
         }
-
-        //
 
         // Create Adapter and set ListView
         TaskListAdapter taskListAdapter = new TaskListAdapter(this, sortedArr);
@@ -79,10 +74,21 @@ public class TaskListActivity extends AppCompatActivity {
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
 
-
+        // REFACTOR
         if (item.getItemId() == R.id.add_task) {
             Intent intent = new Intent(this, TaskActivity3.class);
             startActivity(intent);
+            return true;
+        }
+        if (item.getItemId() == R.id.show_all_tasks) {
+
+            ArrayListSort sort = new ArrayListSort();
+            ArrayList<Task> sortedArr = sort.byId(list);
+
+            Intent intent = new Intent(this, TaskListActivity.class);
+            intent.putExtra("sortedArr", sortedArr);
+            startActivity(intent);
+
             return true;
         }
         if (item.getItemId() == R.id.sort_by_priority) {

@@ -40,7 +40,6 @@ public class TaskActivity3 extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.task_task3);
 
-        // Create button objects.
         this.buttonSave = (Button) findViewById(R.id.button_save);
         this.buttonDelete = (Button) findViewById(R.id.button_delete);
         this.buttonCancel = (Button) findViewById(R.id.button_cancel);
@@ -53,14 +52,13 @@ public class TaskActivity3 extends AppCompatActivity {
             new ArrayList<Task>().toString());
         Log.d("tasksSP: ", tasksSP);
 
-        // Convert SP String data to ArrayList.
+        // Convert SP String data.
         Gson gson = new Gson();
         TypeToken<ArrayList<Task>> tasksGS = new TypeToken<ArrayList<Task>>(){};
         Log.d("tasksGS: ", tasksGS.toString());
         this.taskList = gson.fromJson(tasksSP, tasksGS.getType());
         Log.d("taskList: ", this.taskList.toString());
 
-        // Get form fields.
         this.descriptionForm = (EditText) findViewById(R.id.description);
         this.categoryForm = (EditText) findViewById(R.id.category);
         this.priorityForm = (EditText) findViewById(R.id.priority);
@@ -69,10 +67,8 @@ public class TaskActivity3 extends AppCompatActivity {
         this.notesForm = (EditText) findViewById(R.id.notes);
 
         // Get data from calling activity.
-        //Intent intent = getIntent();
         this.task = (Task) getIntent().getSerializableExtra("task");
 
-        // Set form fields.
         if (this.task != null) {
             this.descriptionForm.setText(task.getDescription());
             this.priorityForm.setText(task.getPriority().toString());
@@ -85,11 +81,12 @@ public class TaskActivity3 extends AppCompatActivity {
 
     public void onButtonClicked(View button) {
 
-        if ( button == this.buttonSave ) {
+        // REFACTOR
+        if (button == this.buttonSave) {
             saveTask();
-        } else if ( button == this.buttonDelete ) {
+        } else if (button == this.buttonDelete) {
             deleteTask();
-        } else if ( button == this.buttonCancel ) {
+        } else if (button == this.buttonCancel) {
             // Do nothing.
         } else {
             // Exception
@@ -102,9 +99,6 @@ public class TaskActivity3 extends AppCompatActivity {
 
     public void saveTask(){
 
-        Log.d("method: ", "saveTask");
-
-        // Get form fields.
         this.descriptionForm = (EditText) findViewById(R.id.description);
         this.categoryForm = (EditText) findViewById(R.id.category);
         this.priorityForm = (EditText) findViewById(R.id.priority);
@@ -112,7 +106,6 @@ public class TaskActivity3 extends AppCompatActivity {
         this.dueDateForm = (EditText) findViewById(R.id.due_date);
         this.notesForm = (EditText) findViewById(R.id.notes);
 
-        // Create object properties.
         String description = descriptionForm.getText().toString();
         String category = categoryForm.getText().toString();
         String priorityStr = priorityForm.getText().toString();
@@ -139,7 +132,6 @@ public class TaskActivity3 extends AppCompatActivity {
             // Create new task.
             int lastId = 0;
             for (Task task : taskList) {
-                //id = task.getId() ? task.getId() > id;
                 if (task.getId() > lastId) {
                     lastId = task.getId();
                 }
@@ -157,7 +149,6 @@ public class TaskActivity3 extends AppCompatActivity {
         SharedPreferences.Editor editor = sharedPref.edit();
         editor.putString("TaskList", gson.toJson(this.taskList));
         editor.apply();
-        //Toast.makeText(this, "Task Saved", Toast.LENGTH_LONG).show();
     }
 
     public void deleteTask(){
@@ -165,8 +156,8 @@ public class TaskActivity3 extends AppCompatActivity {
         Integer id = this.task.getId();
 
         Log.d("taskList pre-del: ", this.taskList.toString());
-        for ( Task t : this.taskList ) {
-            if ( t.getId().equals(id) ) {
+        for (Task t : this.taskList) {
+            if (t.getId().equals(id)) {
                 this.taskList.remove(t);
                 break;
             }
@@ -178,6 +169,5 @@ public class TaskActivity3 extends AppCompatActivity {
         SharedPreferences.Editor editor = sharedPref.edit();
         editor.putString("TaskList", gson.toJson(this.taskList));
         editor.apply();
-        //Toast.makeText(this, "Task Deleted", Toast.LENGTH_LONG).show();
     }
 }

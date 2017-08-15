@@ -33,12 +33,16 @@ public class TaskListAdapter extends ArrayAdapter<Task> {
         Task currentTask = getItem(position);
 
         // Set text in view.
+
         TextView priority = (TextView) listItemView.findViewById(R.id.description);
         priority.setText(currentTask.getPriority().toString());
+
         TextView description = (TextView) listItemView.findViewById(R.id.priority);
         description.setText(currentTask.getDescription());
+
         TextView dueDate = (TextView) listItemView.findViewById(R.id.due_date);
         dueDate.setText(currentTask.getDueDate());
+
         TextView status = (TextView) listItemView.findViewById(R.id.status);
         status.setText(currentTask.getStatus().toString());
 

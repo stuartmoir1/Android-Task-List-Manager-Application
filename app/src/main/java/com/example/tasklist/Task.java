@@ -19,7 +19,6 @@ public class Task implements Serializable{
     private String notes;
 
     // Constructor
-    // TO DO - Date to be changed from type String to type Date.
     public Task(Integer id, String category, Integer priority, String description, String
             dueDate, boolean status, String notes){
         this.id = id;
@@ -33,8 +32,6 @@ public class Task implements Serializable{
 
     // Methods
 
-    // Id
-
     public Integer getId(){
         return this.id;
     }
@@ -42,8 +39,6 @@ public class Task implements Serializable{
     public void setId(Integer id){
         this.id = id;
     }
-
-    // Category
 
     public String getCategory(){
         return this.category;
@@ -53,8 +48,6 @@ public class Task implements Serializable{
         this.category = category;
     }
 
-    // Priority
-
     public Integer getPriority(){
         return this.priority;
     }
@@ -62,8 +55,6 @@ public class Task implements Serializable{
     public void setPriority(Integer priority){
         this.priority = priority;
     }
-
-    // Description
 
     public String getDescription(){
         return this.description;
@@ -73,9 +64,6 @@ public class Task implements Serializable{
         this.description = description;
     }
 
-    // TO DO - Date to be changed from type String to type Date.
-    // Due date.
-
     public String getDueDate(){
         return this.dueDate;
     }
@@ -83,8 +71,6 @@ public class Task implements Serializable{
     public void setDueDate(String dueDate){
         this.dueDate = dueDate;
     }
-
-    // Status
 
     public Boolean getStatus(){
         return this.status;
@@ -94,8 +80,6 @@ public class Task implements Serializable{
         this.status = status;
     }
 
-    // Notes
-
     public String getNotes(){
         return this.notes;
     }
@@ -104,7 +88,6 @@ public class Task implements Serializable{
         this.notes = notes;
     }
 
-    // Comparator for sorting ArrayList by priority.
     public static Comparator<Task> TaskPriorityComparator = new Comparator<Task>() {
         public int compare (Task task1, Task task2) {
             Integer taskPriority1 = task1.getPriority();
@@ -114,7 +97,6 @@ public class Task implements Serializable{
         }
     };
 
-    // Comparator for sorting ArrayList by category.
     public static Comparator<Task> TaskCategoryComparator = new Comparator<Task>() {
         public int compare (Task task1, Task task2) {
             String taskCategory1 = task1.getCategory().toLowerCase();
@@ -124,7 +106,6 @@ public class Task implements Serializable{
         }
     };
 
-    // Comparator for sorting ArrayList by due date.
     public static Comparator<Task> TaskDueDateComparator = new Comparator<Task>() {
         public int compare (Task task1, Task task2) {
             String taskDueDate1 = task1.getDueDate().toLowerCase();
@@ -134,7 +115,6 @@ public class Task implements Serializable{
         }
     };
 
-    // Comparator for sorting ArrayList by id.
     public static Comparator<Task> TaskIdComparator = new Comparator<Task>() {
         public int compare (Task task1, Task task2) {
             Integer taskId1 = task1.getId();
@@ -144,7 +124,6 @@ public class Task implements Serializable{
         }
     };
 
-    // Comparator for sorting ArrayList by priority then id.
     public static Comparator<Task> TaskPriorityThenIdComparator = new Comparator<Task>() {
         public int compare (Task task1, Task task2) {
             Integer taskPriority1 = task1.getPriority();
@@ -161,7 +140,6 @@ public class Task implements Serializable{
         }
     };
 
-    // Comparator for sorting ArrayList by category then id.
     public static Comparator<Task> TaskCategoryThenIdComparator = new Comparator<Task>() {
         public int compare (Task task1, Task task2) {
             String taskCategory1 = task1.getCategory();
@@ -178,7 +156,6 @@ public class Task implements Serializable{
         }
     };
 
-    // Comparator for sorting ArrayList by due date then id.
     public static Comparator<Task> TaskDueDateThenIdComparator = new Comparator<Task>() {
         public int compare (Task task1, Task task2) {
             String taskDueDate1 = task1.getDueDate();
@@ -195,7 +172,6 @@ public class Task implements Serializable{
         }
     };
 
-    // Comparator for sorting ArrayList by status then id.
     public static Comparator<Task> TaskStatusThenIdComparator = new Comparator<Task>() {
         public int compare (Task task1, Task task2) {
             Boolean taskStatus1 = task1.getStatus();

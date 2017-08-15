@@ -2,6 +2,7 @@
     <string name="app_name">TaskList</string>
     <string name="preference_file_key">TASKDETAILS</string>
     <string name="add_task">Add task</string>
+    <string name="show_all_tasks">Show all tasks</string>
     <string name="sort_by_priority">Sort by priority</string>
     <string name="sort_by_category">Sort by category</string>
     <string name="sort_by_due_date">Sort by due date</string>

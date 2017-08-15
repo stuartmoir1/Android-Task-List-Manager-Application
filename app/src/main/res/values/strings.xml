@@ -8,4 +8,7 @@
     <string name="sort_by_due_date">Sort by due date</string>
     <string name="show_open">Show open</string>
     <string name="show_closed">Show closed</string>
+    <string name="add_category">Add category</string>
+    <string name="remove_category">Remove category</string>
+    <string name="title_activity_category_add">CategoryAddActivity</string>
 </resources>

@@ -46,6 +46,9 @@ public class TaskListAdapter extends ArrayAdapter<Task> {
         TextView status = (TextView) listItemView.findViewById(R.id.status);
         status.setText(currentTask.getStatus().toString());
 
+        TextView category = (TextView) listItemView.findViewById(R.id.category);
+        status.setText(currentTask.getCategory());
+
         //
         listItemView.setTag(currentTask);
         return listItemView;

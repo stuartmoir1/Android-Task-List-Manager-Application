@@ -52,15 +52,24 @@ public class TaskListActivity extends AppCompatActivity {
         }
 
         // Save category list to SP if it does not exist.
-        String categoriesSP = sharedPref.getString("CategoryList",
-                new HashMap<String, String>().toString());
-        Log.d("categoriesSP: ", categoriesSP.toString());
 
-        if (categoriesSP.toString() == "{}"){
-            Log.d("categories to SP", "...");
-            CategoryList categoryList = new CategoryList();
+        // Get String data from SP.
+
+        String categorySP = sharedPref.getString("CategoryList",
+                new CategoryList().toString());
+        Log.d("categorySP: ", categorySP);
+
+        // Convert SP String data.
+        TypeToken<CategoryList> categoryGS = new TypeToken<CategoryList>(){};
+        Log.d("categoryGS: ", categoryGS.toString());
+        CategoryList categoryList = gson.fromJson(categorySP, categoryGS.getType());
+        Log.d("categoryList: ", categoryList.toString());
+
+        if (categoryList.getNumberOfCategories() == 0){
+            Log.d("Added default ", "categories to SP...");
+            CategoryList categoriesDefault = new CategoryList();
             SharedPreferences.Editor editor = sharedPref.edit();
-            editor.putString("CategoryList", gson.toJson(categoryList));
+            editor.putString("CategoryList", gson.toJson(categoriesDefault));
             editor.apply();
         }
 

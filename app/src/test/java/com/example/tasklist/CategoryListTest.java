@@ -21,19 +21,24 @@ public class CategoryListTest {
     }
 
     @Test
+    public void testNumberOfCategories(){
+        assertEquals(2, categoryList.getNumberOfCategories());
+    }
+
+    @Test
     public void testPresetCategory1Name() {
-        assertEquals("red", categoryList.getCategoryColour("Work"));
+        assertEquals("#FF0000", categoryList.getCategoryColour("Work"));
     }
 
     @Test
     public void testPresetCategory2Name() {
-        assertEquals("blue", categoryList.getCategoryColour("Home"));
+        assertEquals("#0000FF", categoryList.getCategoryColour("Home"));
     }
 
     @Test
     public void testAddCategory(){
-        categoryList.addCategory("Shopping", "green");
-        assertEquals("green", categoryList.getCategoryColour("Shopping"));
+        categoryList.addCategory("Shopping", "#FF00FF");
+        assertEquals("#FF00FF", categoryList.getCategoryColour("Shopping"));
     }
 
     @Test

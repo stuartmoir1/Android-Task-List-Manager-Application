@@ -20,81 +20,41 @@ public class ColoursTest {
 
     @Test
     public void testColour1(){
-        assertEquals("black", colours.getColour(0));
+        assertEquals("#0000FF", colours.getColour(0));
     }
 
     @Test
     public void testColour2(){
-        assertEquals("grey", colours.getColour(1));
+        assertEquals("#00FFFF", colours.getColour(1));
     }
 
     @Test
     public void testColour3(){
-        assertEquals("silver", colours.getColour(2));
+        assertEquals("#FFA500", colours.getColour(2));
     }
 
     @Test
     public void testColour4(){
-        assertEquals("white", colours.getColour(3));
+        assertEquals("#008000", colours.getColour(3));
     }
 
     @Test
     public void testColour5(){
-        assertEquals("maroon", colours.getColour(4));
+        assertEquals("#808080", colours.getColour(4));
     }
 
     @Test
     public void testColour6(){
-        assertEquals("red", colours.getColour(5));
+        assertEquals("#FF00FF", colours.getColour(5));
     }
 
     @Test
     public void testColour7(){
-        assertEquals("olive", colours.getColour(6));
+        assertEquals("#FF0000", colours.getColour(6));
     }
 
     @Test
     public void testColour8(){
-        assertEquals("yellow", colours.getColour(7));
-    }
-
-    @Test
-    public void testColour9(){
-        assertEquals("green", colours.getColour(8));
-    }
-
-    @Test
-    public void testColour10(){
-        assertEquals("lime", colours.getColour(9));
-    }
-
-    @Test
-    public void testColour11(){
-        assertEquals("teal", colours.getColour(10));
-    }
-
-    @Test
-    public void testColour12(){
-        assertEquals("aqua", colours.getColour(11));
-    }
-
-    @Test
-    public void testColour13(){
-        assertEquals("navy", colours.getColour(12));
-    }
-
-    @Test
-    public void testColour14(){
-        assertEquals("blue", colours.getColour(13));
-    }
-
-    @Test
-    public void testColour15(){
-        assertEquals("purple", colours.getColour(14));
-    }
-
-    @Test
-    public void testColour16(){
-        assertEquals("fuchsia", colours.getColour(15));
+        assertEquals("#FFFF00", colours.getColour(7));
     }
 }

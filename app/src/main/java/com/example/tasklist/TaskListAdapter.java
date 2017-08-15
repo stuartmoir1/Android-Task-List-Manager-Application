@@ -1,6 +1,8 @@
 package com.example.tasklist;
 
 import android.content.Context;
+import android.graphics.Color;
+import android.support.v4.content.ContextCompat;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -34,10 +36,15 @@ public class TaskListAdapter extends ArrayAdapter<Task> {
 
         // Set text in view.
 
-        TextView priority = (TextView) listItemView.findViewById(R.id.description);
+        TextView priority = (TextView) listItemView.findViewById(R.id.priority);
         priority.setText(currentTask.getPriority().toString());
 
-        TextView description = (TextView) listItemView.findViewById(R.id.priority);
+        //CategoryList categoryList = new CategoryList();
+        String colour = categoryList.getCategoryColour(currentTask.getCategory());
+        Log.d("", "");
+        //priority.setBackgroundColor(Color.parseColor(colour));
+
+        TextView description = (TextView) listItemView.findViewById(R.id.description);
         description.setText(currentTask.getDescription());
 
         TextView dueDate = (TextView) listItemView.findViewById(R.id.due_date);
@@ -47,7 +54,7 @@ public class TaskListAdapter extends ArrayAdapter<Task> {
         status.setText(currentTask.getStatus().toString());
 
         TextView category = (TextView) listItemView.findViewById(R.id.category);
-        status.setText(currentTask.getCategory());
+        category.setText(currentTask.getCategory());
 
         //
         listItemView.setTag(currentTask);

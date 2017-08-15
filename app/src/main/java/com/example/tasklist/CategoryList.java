@@ -14,11 +14,15 @@ public class CategoryList {
     // Constructor
     public CategoryList(){
         this.categories = new HashMap<String, String>();
-        this.categories.put("Work", "red");
-        this.categories.put("Home", "blue");
+        this.categories.put("Work", "#FF0000");
+        this.categories.put("Home", "#0000FF");
     }
 
     // Methods
+
+    public int getNumberOfCategories(){
+        return categories.size();
+    }
 
     public String getCategoryColour(String name){
         return categories.get(name);

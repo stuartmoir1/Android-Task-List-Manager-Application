@@ -14,9 +14,8 @@ public class Colours {
 
     // Constructor
     public Colours(){
-        colours = new ArrayList<String>(Arrays.asList("black", "grey", "silver", "white",
-            "maroon", "red", "olive", "yellow", "green", "lime", "teal", "aqua", "navy","blue",
-            "purple", "fuchsia"));
+        colours = new ArrayList<String>(Arrays.asList("#0000FF", "#00FFFF", "#FFA500", "#008000",
+                "#808080", "#FF00FF", "#FF0000", "#FFFF00"));
     }
 
     // Methods

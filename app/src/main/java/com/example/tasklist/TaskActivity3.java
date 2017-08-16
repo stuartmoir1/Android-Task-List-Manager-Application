@@ -17,7 +17,10 @@ import android.widget.Toast;
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
 
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 
 public class TaskActivity3 extends AppCompatActivity {
 
@@ -78,7 +81,7 @@ public class TaskActivity3 extends AppCompatActivity {
             this.priorityForm.setText(task.getPriority().toString());
             this.categoryForm.setText(task.getCategory());
             this.statusForm.setText(String.valueOf(task.getStatus()));
-            this.dueDateForm.setText(task.getDueDate());
+            this.dueDateForm.setText(task.getDueDateAsString());
             this.notesForm.setText(task.getNotes());
         }
     }
@@ -139,12 +142,21 @@ public class TaskActivity3 extends AppCompatActivity {
         Integer priority = Integer.valueOf(priorityStr);
         String statusStr = statusForm.getText().toString();
         Boolean status = Boolean.valueOf(statusStr);
+        // Date
         String dueDate = dueDateForm.getText().toString();
         String notes = notesForm.getText().toString();
 
+        SimpleDateFormat formatter = new SimpleDateFormat("MM/dd/yyyy");
+        Date date = new Date();
+        try {
+            date = formatter.parse(dueDate);
+        } catch (ParseException e) {
+            e.printStackTrace();
+        }
+
         Log.d("taskList pre-save: ", taskList.toString());
 
-        Integer id;
+        Integer id;;
         if (this.task != null) {
             // Remove existing task from SP.
             id = this.task.getId();
@@ -166,7 +178,7 @@ public class TaskActivity3 extends AppCompatActivity {
             id = lastId + 1;
             Log.d("tasktobeadded id: ", id.toString());
         }
-        Task newTask = new Task(id, category, priority, description, dueDate, status, notes);
+        Task newTask = new Task(id, category, priority, description, date, status, notes);
         this.taskList.add(newTask);
 
         Log.d("taskList pre-save: ", taskList.toString());
@@ -179,6 +191,10 @@ public class TaskActivity3 extends AppCompatActivity {
     }
 
     public void deleteTask(){
+
+        if (this.task == null) {
+            return;
+        }
 
         Integer id = this.task.getId();
 

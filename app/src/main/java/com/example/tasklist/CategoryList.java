@@ -1,12 +1,13 @@
 package com.example.tasklist;
 
+import java.io.Serializable;
 import java.util.HashMap;
 
 /**
  * Created by stuartmoir on 15/08/2017.
  */
 
-public class CategoryList {
+public class CategoryList implements Serializable {
 
     // Properties
     private HashMap<String, String> categories;
@@ -29,7 +30,8 @@ public class CategoryList {
     }
 
     public void addCategory(String name, String colour){
-        categories.put(name.toLowerCase(), colour);
+        //categories.put(name.toLowerCase(), colour);
+        categories.put(name, colour);
     }
 
     public void removeCategory(String name){

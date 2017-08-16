@@ -45,8 +45,8 @@ public class TaskListAdapter extends ArrayAdapter<Task> {
         // Get String data from SP.
         sharedPref =
                 getContext().getSharedPreferences("TASKDETAILS", Context.MODE_PRIVATE);
-        String categorySP = sharedPref.getString("CategoryList",
-                new CategoryList().toString());
+        // HACK: new CategoryList().toString() replaced by "{}"
+        String categorySP = sharedPref.getString("CategoryList", null);
         Log.d("categorySP: ", categorySP);
 
         // Convert SP String data.
@@ -65,13 +65,16 @@ public class TaskListAdapter extends ArrayAdapter<Task> {
         String colour = categoryList.getCategoryColour(currentTask.getCategory());
         if (colour != null) {
             priority.setBackgroundColor(Color.parseColor(colour));
+        } else {
+            priority.setBackgroundColor(Color.parseColor("white"));
         }
 
         TextView description = (TextView) listItemView.findViewById(R.id.description);
         description.setText(currentTask.getDescription());
 
+        // Date
         TextView dueDate = (TextView) listItemView.findViewById(R.id.due_date);
-        dueDate.setText(currentTask.getDueDate());
+        dueDate.setText(currentTask.getDueDateAsString());
 
         TextView status = (TextView) listItemView.findViewById(R.id.status);
         status.setText(currentTask.getStatusTask());

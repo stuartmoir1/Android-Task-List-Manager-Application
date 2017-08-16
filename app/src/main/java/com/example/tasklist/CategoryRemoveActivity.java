@@ -38,8 +38,8 @@ public class CategoryRemoveActivity extends AppCompatActivity {
         // Get String data from SP.
         this.sharedPref =
                 getSharedPreferences(getString(R.string.preference_file_key), Context.MODE_PRIVATE);
-        String categorySP = sharedPref.getString("CategoryList",
-                new CategoryList().toString());
+        // HACK: new CategoryList().toString() replaced by "{}"
+        String categorySP = sharedPref.getString("CategoryList", null);
         Log.d("categorySP: ", categorySP);
 
         // Convert SP String data.
@@ -81,8 +81,6 @@ public class CategoryRemoveActivity extends AppCompatActivity {
         SharedPreferences.Editor editor = sharedPref.edit();
         editor.putString("CategoryList", gson.toJson(this.categoryList));
         editor.apply();
-
-        //
 
         // Get String data from SP.
         SharedPreferences sharedPref =

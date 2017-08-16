@@ -3,6 +3,10 @@ package com.example.tasklist;
 import org.junit.Before;
 import org.junit.Test;
 
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.Date;
+
 import static junit.framework.Assert.assertEquals;
 import static junit.framework.Assert.assertFalse;
 import static junit.framework.Assert.assertTrue;
@@ -15,10 +19,26 @@ public class TaskTest {
 
     // Properties
     Task task;
+    Date dueDate1, dueDate2;
+    String dueDateStr1, dueDateStr2;
 
     @Before
     public void before(){
-        task = new Task(1, "work", 1, "Task 1", "Date 1", false, "Notes 1");
+
+        // Setup dates.
+        SimpleDateFormat formatter = new SimpleDateFormat("MM/dd/yyyy");
+        dueDateStr1 = "09/22/2009";
+        dueDateStr2 = "10/23/2010";
+        dueDate1 = new Date();
+        dueDate2 = new Date();
+        try {
+            dueDate1 = formatter.parse(dueDateStr1);
+            dueDate2 = formatter.parse(dueDateStr2);
+        } catch (ParseException e) {
+            e.printStackTrace();
+        }
+
+        task = new Task(1, "work", 1, "Task 1", dueDate1, false, "Notes 1");
     }
 
     // Tests
@@ -81,15 +101,37 @@ public class TaskTest {
 
     // Due date.
 
+    //@Test
+    //public void testGetDueDate(){
+    //    assertEquals("Date 1", task.getDueDate());
+    //}
+
+    //@Test
+    //public void testSetDueDate(){
+    //    task.setDueDate("Date 1 changed");
+    //    assertEquals("Date 1 changed", task.getDueDate());
+    //}
+
     @Test
     public void testGetDueDate(){
-        assertEquals("Date 1", task.getDueDate());
+        assertEquals(dueDate1, task.getDueDate());
     }
 
     @Test
     public void testSetDueDate(){
-        task.setDueDate("Date 1 changed");
-        assertEquals("Date 1 changed", task.getDueDate());
+        task.setDueDate(dueDate2);
+        assertEquals(dueDate2, task.getDueDate());
+    }
+
+    @Test
+    public void testSetDueDateFromString(){
+        task.setDueDateFromString(dueDateStr1);
+        assertEquals(dueDate1, task.getDueDate());
+    }
+
+    @Test
+    public void testGetDueDateAsString(){
+        assertEquals(dueDateStr1, task.getDueDateAsString());
     }
 
     // Status

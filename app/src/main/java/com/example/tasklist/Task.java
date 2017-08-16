@@ -1,7 +1,10 @@
 package com.example.tasklist;
 
 import java.io.Serializable;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.Comparator;
+import java.util.Date;
 
 /**
  * Created by stuartmoir on 11/08/2017.
@@ -14,13 +17,16 @@ public class Task implements Serializable{
     private String category;
     private Integer priority;
     private String description;
-    private String dueDate; // TO DO - Date to be changed from type String to type Date.
+    //private String dueDate;
+    private Date dueDate;
     private Boolean status;
     private String notes;
 
     // Constructor
-    public Task(Integer id, String category, Integer priority, String description, String
-            dueDate, boolean status, String notes){
+    //public Task(Integer id, String category, Integer priority, String description, String
+    //        dueDate, boolean status, String notes){
+    public Task(Integer id, String category, Integer priority, String description, Date
+                dueDate, boolean status, String notes){
         this.id = id;
         this.category = category;
         this.priority = priority;
@@ -64,13 +70,38 @@ public class Task implements Serializable{
         this.description = description;
     }
 
-    public String getDueDate(){
+    //public String getDueDate(){
+    //    return this.dueDate;
+    //}
+
+    public Date getDueDate(){
         return this.dueDate;
     }
 
-    public void setDueDate(String dueDate){
+    //public String setDueDate(String dueDate){
+    //    this.dueDate = dueDate;
+    //}
+
+    public void setDueDate(Date dueDate){
         this.dueDate = dueDate;
     }
+
+    public void setDueDateFromString(String dueDate){
+        SimpleDateFormat formatter = new SimpleDateFormat("MM/dd/yyyy");
+        try {
+            this.dueDate = formatter.parse(dueDate);
+        } catch (ParseException e) {
+            e.printStackTrace();
+        }
+    }
+
+    public String getDueDateAsString(){
+        SimpleDateFormat formatter = new SimpleDateFormat("MM/dd/yyyy");
+        String dueDate = formatter.format(this.dueDate);
+        return dueDate;
+    }
+
+
 
     public Boolean getStatus(){
         return this.status;
@@ -116,8 +147,10 @@ public class Task implements Serializable{
 
     public static Comparator<Task> TaskDueDateComparator = new Comparator<Task>() {
         public int compare (Task task1, Task task2) {
-            String taskDueDate1 = task1.getDueDate().toLowerCase();
-            String taskDueDate2 = task2.getDueDate().toLowerCase();
+            //String taskDueDate1 = task1.getDueDate().toLowerCase();
+            //String taskDueDate2 = task2.getDueDate().toLowerCase();
+            Date taskDueDate1 = task1.getDueDate();
+            Date taskDueDate2 = task2.getDueDate();
             // Ascending order.
             return taskDueDate1.compareTo(taskDueDate2);
         }
@@ -166,8 +199,10 @@ public class Task implements Serializable{
 
     public static Comparator<Task> TaskDueDateThenIdComparator = new Comparator<Task>() {
         public int compare (Task task1, Task task2) {
-            String taskDueDate1 = task1.getDueDate();
-            String taskDueDate2 = task2.getDueDate();
+            //String taskDueDate1 = task1.getDueDate();
+            //String taskDueDate2 = task2.getDueDate();
+            Date taskDueDate1 = task1.getDueDate();
+            Date taskDueDate2 = task2.getDueDate();
             // Ascending order.
             int compareResult = taskDueDate1.compareTo(taskDueDate2);
             if (compareResult != 0) {

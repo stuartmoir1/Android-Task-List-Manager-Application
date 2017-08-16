@@ -15,6 +15,7 @@ import android.widget.ListView;
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
 
+import java.lang.reflect.Type;
 import java.util.ArrayList;
 import java.util.HashMap;
 
@@ -35,6 +36,9 @@ public class TaskListActivity extends AppCompatActivity {
         // Get String data from SP.
         SharedPreferences sharedPref =
             getSharedPreferences(getString(R.string.preference_file_key), Context.MODE_PRIVATE);
+        //SharedPreferences.Editor editorDebug = sharedPref.edit();
+        //editorDebug.clear();
+        //editorDebug.commit();
         String tasksSP = sharedPref.getString("TaskList",
             new ArrayList<Task>().toString());
 
@@ -54,18 +58,16 @@ public class TaskListActivity extends AppCompatActivity {
         // Save category list to SP if it does not exist.
 
         // Get String data from SP.
+        Type categoryListType = new TypeToken<CategoryList>(){}.getType();
+        // HACK: new CategoryList().toString() replaced by "{}"
+        String categorySP = sharedPref.getString("CategoryList", null);
+        CategoryList categoryList = gson.fromJson(categorySP, categoryListType);
 
-        String categorySP = sharedPref.getString("CategoryList",
-                new CategoryList().toString());
-        Log.d("categorySP: ", categorySP);
+        //if(categoryList == null){
+        //    categoryList = new CategoryList();
+        //}
 
-        // Convert SP String data.
-        TypeToken<CategoryList> categoryGS = new TypeToken<CategoryList>(){};
-        Log.d("categoryGS: ", categoryGS.toString());
-        CategoryList categoryList = gson.fromJson(categorySP, categoryGS.getType());
-        Log.d("categoryList: ", categoryList.toString());
-
-        if (categoryList.getNumberOfCategories() == 0){
+        if (categoryList == null){
             Log.d("Added default ", "categories to SP...");
             CategoryList categoriesDefault = new CategoryList();
             SharedPreferences.Editor editor = sharedPref.edit();

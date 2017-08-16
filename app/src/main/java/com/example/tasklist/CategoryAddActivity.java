@@ -40,8 +40,8 @@ public class CategoryAddActivity extends AppCompatActivity {
         // Get String data from SP.
         this.sharedPref =
                 getSharedPreferences(getString(R.string.preference_file_key), Context.MODE_PRIVATE);
-        String categorySP = sharedPref.getString("CategoryList",
-                new CategoryList().toString());
+        // HACK: new CategoryList().toString() replaced by "{}"
+        String categorySP = sharedPref.getString("CategoryList", null);
         Log.d("categorySP: ", categorySP);
 
         // Convert SP String data.

@@ -14,8 +14,8 @@ public class CategoryList {
     // Constructor
     public CategoryList(){
         this.categories = new HashMap<String, String>();
-        this.categories.put("Work", "#FF0000");
-        this.categories.put("Home", "#0000FF");
+        this.categories.put("work", "red");
+        this.categories.put("home", "blue");
     }
 
     // Methods
@@ -29,7 +29,7 @@ public class CategoryList {
     }
 
     public void addCategory(String name, String colour){
-        categories.put(name, colour);
+        categories.put(name.toLowerCase(), colour);
     }
 
     public void removeCategory(String name){

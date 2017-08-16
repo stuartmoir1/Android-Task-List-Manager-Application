@@ -105,6 +105,20 @@ public class TaskTest {
         assertTrue(task.getStatus());
     }
 
+    // Status task
+
+    @Test
+    public void testGetStatusTaskOpen(){
+        task.setStatus(true);
+        assertEquals("open", task.getStatusTask());
+    }
+
+    @Test
+    public void testSetStatusTaskClosed(){
+        task.setStatus(false);
+        assertEquals("closed", task.getStatusTask());
+    }
+
     // Notes
 
     @Test

@@ -14,5 +14,7 @@
     <item android:id="@+id/show_open"
         android:title="@string/show_open"/>
     <item android:id="@+id/show_closed"
-        android:title="@string/show_closed"/>
+        android:title="Show closed"/>
+    <item android:id="@+id/show_no_category"
+        android:title="Show no category"/>
 </menu>

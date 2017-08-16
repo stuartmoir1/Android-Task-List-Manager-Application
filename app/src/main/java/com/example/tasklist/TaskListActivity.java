@@ -168,6 +168,17 @@ public class TaskListActivity extends AppCompatActivity {
 
             return true;
         }
+        if (item.getItemId() == R.id.show_no_category) {
+
+            ArrayListSort sort = new ArrayListSort();
+            ArrayList<Task> sortedArr = sort.showNoCategory(list);
+
+            Intent intent = new Intent(this, TaskListActivity.class);
+            intent.putExtra("sortedArr", sortedArr);
+            startActivity(intent);
+
+            return true;
+        }
         return super.onOptionsItemSelected(item);
     }
 }

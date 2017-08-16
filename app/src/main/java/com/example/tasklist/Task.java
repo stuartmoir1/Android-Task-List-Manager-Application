@@ -45,7 +45,7 @@ public class Task implements Serializable{
     }
 
     public void setCategory(String category){
-        this.category = category;
+        this.category = category.toLowerCase();
     }
 
     public Integer getPriority(){
@@ -78,6 +78,14 @@ public class Task implements Serializable{
 
     public void setStatus(boolean status){
         this.status = status;
+    }
+
+    public String getStatusTask(){
+        if (getStatus()) {
+            return "open";
+        } else {
+            return "closed";
+        }
     }
 
     public String getNotes(){

@@ -20,41 +20,41 @@ public class ColoursTest {
 
     @Test
     public void testColour1(){
-        assertEquals("#0000FF", colours.getColour(0));
+        assertEquals("red", colours.getColour(0));
     }
 
     @Test
     public void testColour2(){
-        assertEquals("#00FFFF", colours.getColour(1));
+        assertEquals("blue", colours.getColour(1));
     }
 
     @Test
     public void testColour3(){
-        assertEquals("#FFA500", colours.getColour(2));
+        assertEquals("green", colours.getColour(2));
     }
 
     @Test
     public void testColour4(){
-        assertEquals("#008000", colours.getColour(3));
+        assertEquals("gray", colours.getColour(3));
     }
 
     @Test
     public void testColour5(){
-        assertEquals("#808080", colours.getColour(4));
+        assertEquals("magenta", colours.getColour(4));
     }
 
     @Test
     public void testColour6(){
-        assertEquals("#FF00FF", colours.getColour(5));
+        assertEquals("yellow", colours.getColour(5));
     }
 
     @Test
     public void testColour7(){
-        assertEquals("#FF0000", colours.getColour(6));
+        assertEquals("aqua", colours.getColour(6));
     }
 
     @Test
     public void testColour8(){
-        assertEquals("#FFFF00", colours.getColour(7));
+        assertEquals("fuchsia", colours.getColour(7));
     }
 }

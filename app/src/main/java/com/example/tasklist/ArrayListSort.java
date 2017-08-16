@@ -73,4 +73,15 @@ public class ArrayListSort {
         }
         return closedTasks;
     }
+
+    public ArrayList<Task> showNoCategory(ArrayList<Task> taskList){
+        Collections.sort(taskList, Task.TaskCategoryThenIdComparator);
+        ArrayList<Task> noCategoryTasks = new ArrayList<Task>();
+        for (Task task: taskList) {
+            if (task.getCategory() == "") {
+                noCategoryTasks.add(task);
+            }
+        }
+        return noCategoryTasks;
+    }
 }

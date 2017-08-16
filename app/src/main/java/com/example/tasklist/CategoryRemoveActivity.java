@@ -76,10 +76,35 @@ public class CategoryRemoveActivity extends AppCompatActivity {
 
         this.categoryList.removeCategory(category);
 
-        // Save task list to SP.
+        // Save category list to SP.
         Gson gson = new Gson();
         SharedPreferences.Editor editor = sharedPref.edit();
         editor.putString("CategoryList", gson.toJson(this.categoryList));
         editor.apply();
+
+        //
+
+        // Get String data from SP.
+        SharedPreferences sharedPref =
+                getSharedPreferences(getString(R.string.preference_file_key), Context.MODE_PRIVATE);
+        String tasksSP = sharedPref.getString("TaskList",
+                new ArrayList<Task>().toString());
+
+        // Convert SP String data.
+        TypeToken<ArrayList<Task>> tasksGS = new TypeToken<ArrayList<Task>>(){};
+        ArrayList<Task> taskList = gson.fromJson(tasksSP, tasksGS.getType());
+
+        for (Task task : taskList) {
+            Log.d("task category: ", task.getCategory());
+            if (task.getCategory().equals(category)) {
+                task.setCategory("");
+            }
+        }
+
+        // Save task list to SP.
+        editor.putString("TaskList", gson.toJson(taskList));
+        editor.apply();
+
+        //
     }
 }

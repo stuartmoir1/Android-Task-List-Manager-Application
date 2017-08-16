@@ -1,7 +1,9 @@
 package com.example.tasklist;
 
+import android.content.SharedPreferences;
 import android.content.Context;
 import android.graphics.Color;
+import android.os.Bundle;
 import android.support.v4.content.ContextCompat;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -10,6 +12,9 @@ import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.TextView;
 
+import com.google.gson.Gson;
+import com.google.gson.reflect.TypeToken;
+
 import java.util.ArrayList;
 
 /**
@@ -17,6 +22,9 @@ import java.util.ArrayList;
  */
 
 public class TaskListAdapter extends ArrayAdapter<Task> {
+
+    private static SharedPreferences sharedPref;
+    private CategoryList categoryList;
 
     public TaskListAdapter(Context context, ArrayList<Task> taskList) {
         super(context, 0, taskList);
@@ -34,15 +42,30 @@ public class TaskListAdapter extends ArrayAdapter<Task> {
         //
         Task currentTask = getItem(position);
 
+        // Get String data from SP.
+        sharedPref =
+                getContext().getSharedPreferences("TASKDETAILS", Context.MODE_PRIVATE);
+        String categorySP = sharedPref.getString("CategoryList",
+                new CategoryList().toString());
+        Log.d("categorySP: ", categorySP);
+
+        // Convert SP String data.
+        Gson gson = new Gson();
+        TypeToken<CategoryList> categoryGS = new TypeToken<CategoryList>(){};
+        Log.d("categoryGS: ", categoryGS.toString());
+        this.categoryList = gson.fromJson(categorySP, categoryGS.getType());
+        Log.d("categoryList: ", this.categoryList.toString());
+
         // Set text in view.
 
         TextView priority = (TextView) listItemView.findViewById(R.id.priority);
         priority.setText(currentTask.getPriority().toString());
 
-        //CategoryList categoryList = new CategoryList();
+        // Assign background colour where task has category.
         String colour = categoryList.getCategoryColour(currentTask.getCategory());
-        Log.d("", "");
-        //priority.setBackgroundColor(Color.parseColor(colour));
+        if (colour != null) {
+            priority.setBackgroundColor(Color.parseColor(colour));
+        }
 
         TextView description = (TextView) listItemView.findViewById(R.id.description);
         description.setText(currentTask.getDescription());
@@ -51,10 +74,15 @@ public class TaskListAdapter extends ArrayAdapter<Task> {
         dueDate.setText(currentTask.getDueDate());
 
         TextView status = (TextView) listItemView.findViewById(R.id.status);
-        status.setText(currentTask.getStatus().toString());
+        status.setText(currentTask.getStatusTask());
 
         TextView category = (TextView) listItemView.findViewById(R.id.category);
-        category.setText(currentTask.getCategory());
+
+        if (currentTask.getCategory().equals("")) {
+            category.setText("no category");
+        } else {
+            category.setText(currentTask.getCategory());
+        }
 
         //
         listItemView.setTag(currentTask);

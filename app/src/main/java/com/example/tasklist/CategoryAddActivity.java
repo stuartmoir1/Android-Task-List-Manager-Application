@@ -40,16 +40,11 @@ public class CategoryAddActivity extends AppCompatActivity {
         // Get String data from SP.
         this.sharedPref =
                 getSharedPreferences(getString(R.string.preference_file_key), Context.MODE_PRIVATE);
-        // HACK: new CategoryList().toString() replaced by "{}"
         String categorySP = sharedPref.getString("CategoryList", null);
-        Log.d("categorySP: ", categorySP);
-
         // Convert SP String data.
         Gson gson = new Gson();
         TypeToken<CategoryList> categoryGS = new TypeToken<CategoryList>(){};
-        Log.d("categoryGS: ", categoryGS.toString());
         this.categoryList = gson.fromJson(categorySP, categoryGS.getType());
-        Log.d("categoryList: ", this.categoryList.toString());
 
         this.categoryForm = (EditText) findViewById(R.id.category);
         this.categoryColourForm = (EditText) findViewById(R.id.category_colour);

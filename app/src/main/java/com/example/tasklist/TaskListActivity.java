@@ -29,19 +29,19 @@ public class TaskListActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.task_list);
 
-        // Seed data.
+        // DEVELOPMENT. Seed data.
         //TaskList taskList = new TaskList();
         //ArrayList<Task> list = taskList.getList();
 
         // Get String data from SP.
         SharedPreferences sharedPref =
             getSharedPreferences(getString(R.string.preference_file_key), Context.MODE_PRIVATE);
+        // DEVELOPMENT. To clear SP.
         //SharedPreferences.Editor editorDebug = sharedPref.edit();
         //editorDebug.clear();
         //editorDebug.commit();
         String tasksSP = sharedPref.getString("TaskList",
             new ArrayList<Task>().toString());
-
         // Convert SP String data.
         Gson gson = new Gson();
         TypeToken<ArrayList<Task>> tasksGS = new TypeToken<ArrayList<Task>>(){};
@@ -55,19 +55,13 @@ public class TaskListActivity extends AppCompatActivity {
             sortedArr = sort.byId(list);
         }
 
-        // Save category list to SP if it does not exist.
-
         // Get String data from SP.
         Type categoryListType = new TypeToken<CategoryList>(){}.getType();
-        // HACK: new CategoryList().toString() replaced by "{}"
         String categorySP = sharedPref.getString("CategoryList", null);
         CategoryList categoryList = gson.fromJson(categorySP, categoryListType);
 
-        //if(categoryList == null){
-        //    categoryList = new CategoryList();
-        //}
-
-        if (categoryList == null){
+        // Save category list to SP if it does not exist.
+        if (categoryList.getNumberOfCategories() == 0){
             Log.d("Added default ", "categories to SP...");
             CategoryList categoriesDefault = new CategoryList();
             SharedPreferences.Editor editor = sharedPref.edit();
@@ -98,7 +92,6 @@ public class TaskListActivity extends AppCompatActivity {
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
 
-        // REFACTOR
         if (item.getItemId() == R.id.add_task) {
             Intent intent = new Intent(this, TaskActivity3.class);
             startActivity(intent);

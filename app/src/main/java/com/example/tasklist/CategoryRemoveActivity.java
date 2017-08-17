@@ -38,16 +38,12 @@ public class CategoryRemoveActivity extends AppCompatActivity {
         // Get String data from SP.
         this.sharedPref =
                 getSharedPreferences(getString(R.string.preference_file_key), Context.MODE_PRIVATE);
-        // HACK: new CategoryList().toString() replaced by "{}"
         String categorySP = sharedPref.getString("CategoryList", null);
-        Log.d("categorySP: ", categorySP);
 
         // Convert SP String data.
         Gson gson = new Gson();
         TypeToken<CategoryList> categoryGS = new TypeToken<CategoryList>(){};
-        Log.d("categoryGS: ", categoryGS.toString());
         this.categoryList = gson.fromJson(categorySP, categoryGS.getType());
-        Log.d("categoryList: ", this.categoryList.toString());
 
         this.categoryForm = (EditText) findViewById(R.id.category);
     }
@@ -87,7 +83,6 @@ public class CategoryRemoveActivity extends AppCompatActivity {
                 getSharedPreferences(getString(R.string.preference_file_key), Context.MODE_PRIVATE);
         String tasksSP = sharedPref.getString("TaskList",
                 new ArrayList<Task>().toString());
-
         // Convert SP String data.
         TypeToken<ArrayList<Task>> tasksGS = new TypeToken<ArrayList<Task>>(){};
         ArrayList<Task> taskList = gson.fromJson(tasksSP, tasksGS.getType());

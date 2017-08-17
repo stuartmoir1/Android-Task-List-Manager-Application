@@ -57,14 +57,11 @@ public class TaskActivity3 extends AppCompatActivity {
                 Context.MODE_PRIVATE);
         String tasksSP = sharedPref.getString("TaskList",
             new ArrayList<Task>().toString());
-        Log.d("tasksSP: ", tasksSP);
 
         // Convert SP String data.
         Gson gson = new Gson();
         TypeToken<ArrayList<Task>> tasksGS = new TypeToken<ArrayList<Task>>(){};
-        Log.d("tasksGS: ", tasksGS.toString());
         this.taskList = gson.fromJson(tasksSP, tasksGS.getType());
-        Log.d("taskList: ", this.taskList.toString());
 
         this.descriptionForm = (EditText) findViewById(R.id.description);
         this.categoryForm = (EditText) findViewById(R.id.category);
@@ -154,8 +151,6 @@ public class TaskActivity3 extends AppCompatActivity {
             e.printStackTrace();
         }
 
-        Log.d("taskList pre-save: ", taskList.toString());
-
         Integer id;;
         if (this.task != null) {
             // Remove existing task from SP.
@@ -166,7 +161,6 @@ public class TaskActivity3 extends AppCompatActivity {
                     break;
                 }
             }
-            Log.d("tasktoberemoved id: ", id.toString());
         } else {
             // Create new task.
             int lastId = 0;
@@ -176,12 +170,9 @@ public class TaskActivity3 extends AppCompatActivity {
                 }
             }
             id = lastId + 1;
-            Log.d("tasktobeadded id: ", id.toString());
         }
         Task newTask = new Task(id, category, priority, description, date, status, notes);
         this.taskList.add(newTask);
-
-        Log.d("taskList pre-save: ", taskList.toString());
 
         // Save task list to SP.
         Gson gson = new Gson();
@@ -197,15 +188,12 @@ public class TaskActivity3 extends AppCompatActivity {
         }
 
         Integer id = this.task.getId();
-
-        Log.d("taskList pre-del: ", this.taskList.toString());
         for (Task t : this.taskList) {
             if (t.getId().equals(id)) {
                 this.taskList.remove(t);
                 break;
             }
         }
-        Log.d("taskList: post-del: ", this.taskList.toString());
 
         // Save task list to SP.
         Gson gson = new Gson();

@@ -30,8 +30,7 @@ public class CategoryList implements Serializable {
     }
 
     public void addCategory(String name, String colour){
-        //categories.put(name.toLowerCase(), colour);
-        categories.put(name, colour);
+        categories.put(name.toLowerCase(), colour);
     }
 
     public void removeCategory(String name){

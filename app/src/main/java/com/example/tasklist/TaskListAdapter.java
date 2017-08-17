@@ -23,7 +23,7 @@ import java.util.ArrayList;
 
 public class TaskListAdapter extends ArrayAdapter<Task> {
 
-    private static SharedPreferences sharedPref;
+    private SharedPreferences sharedPref;
     private CategoryList categoryList;
 
     public TaskListAdapter(Context context, ArrayList<Task> taskList) {
@@ -33,31 +33,23 @@ public class TaskListAdapter extends ArrayAdapter<Task> {
     @Override
     public View getView(int position, View listItemView, ViewGroup parent){
 
-        //
         if (listItemView == null){
             listItemView = LayoutInflater.from(getContext())
                     .inflate(R.layout.task_item, parent, false);
         }
 
-        //
         Task currentTask = getItem(position);
 
         // Get String data from SP.
-        sharedPref =
+        this.sharedPref =
                 getContext().getSharedPreferences("TASKDETAILS", Context.MODE_PRIVATE);
-        // HACK: new CategoryList().toString() replaced by "{}"
         String categorySP = sharedPref.getString("CategoryList", null);
-        Log.d("categorySP: ", categorySP);
-
         // Convert SP String data.
         Gson gson = new Gson();
         TypeToken<CategoryList> categoryGS = new TypeToken<CategoryList>(){};
-        Log.d("categoryGS: ", categoryGS.toString());
         this.categoryList = gson.fromJson(categorySP, categoryGS.getType());
-        Log.d("categoryList: ", this.categoryList.toString());
 
         // Set text in view.
-
         TextView priority = (TextView) listItemView.findViewById(R.id.priority);
         priority.setText(currentTask.getPriority().toString());
 
@@ -80,14 +72,12 @@ public class TaskListAdapter extends ArrayAdapter<Task> {
         status.setText(currentTask.getStatusTask());
 
         TextView category = (TextView) listItemView.findViewById(R.id.category);
-
         if (currentTask.getCategory().equals("")) {
             category.setText("no category");
         } else {
             category.setText(currentTask.getCategory());
         }
 
-        //
         listItemView.setTag(currentTask);
         return listItemView;
     }
